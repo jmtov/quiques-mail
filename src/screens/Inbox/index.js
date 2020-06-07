@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Button, Box, Heading } from 'grommet/components';
+import { Button, Box, Heading, Image } from 'grommet/components';
 import { AuthContext } from 'contexts/auth';
 
 function Inbox() {
@@ -7,7 +7,10 @@ function Inbox() {
 
   return (
     <Box justify="start" width="large">
-      <Heading level="1">{`${currentUser.name}'s Inbox`}</Heading>
+      <Box width="small" height="small">
+        <Image src={currentUser.photoURL} fit="contain" />
+      </Box>
+      <Heading level="1">{`${currentUser.displayName}'s Inbox`}</Heading>
       <Box justify="start" width="small">
         <Button primary label="Logout" onClick={logout} width="small" />
       </Box>
