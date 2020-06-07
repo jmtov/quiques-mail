@@ -4,7 +4,6 @@ import { Button, Box, Image, FormField, Form, Text, TextInput } from 'grommet/co
 import { INPUT_TYPES } from 'constants/forms';
 import { REQUEST_STATUS } from 'constants/network';
 import { AuthContext } from 'contexts/auth';
-import { AuthService } from 'services/AuthService';
 import Logo from 'assets/logo.png';
 
 import { FORM_INPUTS } from './constants';
@@ -12,31 +11,20 @@ import { FORM_INPUTS } from './constants';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
-  const [sentStatus, setSentStatus] = useState(REQUEST_STATUS.NOT_REQUESTED);
-  const {setCurrentUser} = useContext(AuthContext);
+  const { login, loginStatus, loginError, resetLoginStatus } = useContext(AuthContext);
 
-  const canSubmit = sentStatus !== REQUEST_STATUS.LOADING && email && password;
-  const buttonLabel = sentStatus === REQUEST_STATUS.LOADING ? 'Logging in' : 'Login';
+  const canSubmit = !loginError && loginStatus !== REQUEST_STATUS.LOADING && email && password;
+  const buttonLabel = loginStatus === REQUEST_STATUS.LOADING ? 'Logging in' : 'Login';
 
   const handleSubmit = useCallback(() => {
-    const data = { email, password };
-    setSentStatus(REQUEST_STATUS.LOADING);
-
-    AuthService.login(data)
-      .then((userData) => {
-        setSentStatus(REQUEST_STATUS.DONE);
-        setCurrentUser(userData);
-      })
-      .catch(err => {
-        setSentStatus(REQUEST_STATUS.ERROR);
-        setError(err.message);
-      });
-  }, [email, password, setCurrentUser]);
+    login({ email, password });
+  }, [email, password, login]);
 
   const handleFormChange = useCallback(() => {
-    if (error) setError(null);
-  }, [error]);
+    if (loginError) {
+      resetLoginStatus();
+    }
+  }, [loginError]);
 
   return (
     <Box pad="large" align="center" justify="center">
@@ -65,10 +53,10 @@ function Login() {
               value={password}
             />
           </FormField>
-          <Box direction="row" align="center" justify="start" margin={{ top: 'medium' }}>
-            <Button type="submit" label={buttonLabel} disabled={!canSubmit} margin={{ right: 'medium' }} primary />
-            {error && <Text color="status-critical">{error}</Text>}
+          <Box direction="row" align="center" justify="start" margin={{ top: 'medium', bottom: 'medium' }}>
+            <Button type="submit" label={buttonLabel} disabled={!canSubmit} primary />
           </Box>
+          {loginError && <Text margin={{ top: 'medium' }} color="status-critical">{loginError}</Text>}
         </Form>
       </Box>
     </Box>
