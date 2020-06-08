@@ -4,10 +4,10 @@ import MailListView from 'components/MailListView';
 
 import { MAILS } from './MOCK';
 
-function Inbox() {
+function Sent() {
   return (
-    <MailListView mails={MAILS} title="Inbox" />
+    <MailListView mails={MAILS} title="Sent" />
   );
 }
 
-export default Inbox;
+export default Sent;
