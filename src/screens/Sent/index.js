@@ -22,9 +22,13 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const SENT_FILTERS = {
+  keys: ['recipient']
+};
+
 function Sent() {
   return (
-    <MailListView mails={sent} title="Sent" mailItemRender={(item) => (
+    <MailListView filters={SENT_FILTERS} mails={sent} title="Sent" mailItemRender={(item) => (
       <StyledLink key={item.id} to={`${ROUTES.VIEW.basePath}/${item.id}`}>
         <MailEntry subtitle={`Sent to ${item.recipient.name.full}`} {...item} />
       </StyledLink>

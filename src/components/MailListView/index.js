@@ -15,7 +15,7 @@ import MailEntry from 'components/MailEntry';
 import Field from 'components/Field';
 import FAB from 'components/FAB';
 
-import { DEFAULT_FILTER_KEYS, INITIAL_RANGE, LIST_STEP } from './constants';
+import { DEFAULT_FILTER, INITIAL_RANGE, LIST_STEP } from './constants';
 
 const StyledLink = styled(Link)`
   color: unset;
@@ -31,10 +31,10 @@ const StyledLink = styled(Link)`
   }
 `;
 
-function MailListView({ title, mails, mailItemRender }) {
+function MailListView({ filters, title, mails, mailItemRender }) {
   const history = useHistory();
   const [searchValue, setSearchValue] = useState('');
-  const [filter, setFilter] = useState(DEFAULT_FILTER_KEYS);
+  const [filter, setFilter] = useState(filters);
   const [range, setRange] = useState({ ...INITIAL_RANGE, end: LIST_STEP });
   const { filteredItems, slicedItems } = useList(mails, { filter, range });
 
@@ -90,6 +90,7 @@ function MailListView({ title, mails, mailItemRender }) {
 }
 
 MailListView.defaultProps = {
+  filters: DEFAULT_FILTER,
   mailItemRender(item) {
     return (
       <StyledLink key={item.id} to={`${ROUTES.VIEW.basePath}/${item.id}`}>
@@ -100,6 +101,10 @@ MailListView.defaultProps = {
 };
 
 MailListView.propTypes = {
+  filters: shape({
+    value: string,
+    key: arrayOf(string),
+  }),
   mails: arrayOf(shape(mailPropTypes)),
   title: string,
   mailItemRender: func

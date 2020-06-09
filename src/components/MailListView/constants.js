@@ -1,5 +1,5 @@
-export const DEFAULT_FILTER_KEYS = {
-  keys: ['name', 'from']
+export const DEFAULT_FILTER = {
+  keys: ['sender']
 };
 
 export const INITIAL_RANGE = { start: 0, end: 0 };
