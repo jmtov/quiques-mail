@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { arrayOf, shape, string } from 'prop-types';
+import { arrayOf, func, shape, string } from 'prop-types';
 import { useHistory, Link } from 'react-router-dom';
 import { Box, Heading, Text } from 'grommet/components';
 import { Add } from 'grommet-icons';
@@ -31,7 +31,7 @@ const StyledLink = styled(Link)`
   }
 `;
 
-function MailListView({ title, mails }) {
+function MailListView({ title, mails, mailItemRender }) {
   const history = useHistory();
   const [searchValue, setSearchValue] = useState('');
   const [filter, setFilter] = useState(DEFAULT_FILTER_KEYS);
@@ -80,11 +80,7 @@ function MailListView({ title, mails }) {
             filtered={filter.value && !!filter.value.length}
             items={slicedItems}
             hasMore={slicedItems.length < filteredItems.length}
-            render={(item) => (
-              <StyledLink key={item.id} to={`${ROUTES.VIEW.basePath}/${item.id}`}>
-                <MailEntry {...item} />
-              </StyledLink>
-            )}
+            render={mailItemRender}
           />
         </Box>
         <FAB icon={<Add color="white" />} onClick={handleCompose} />
@@ -93,11 +89,20 @@ function MailListView({ title, mails }) {
   );
 }
 
-
+MailListView.defaultProps = {
+  mailItemRender(item) {
+    return (
+      <StyledLink key={item.id} to={`${ROUTES.VIEW.basePath}/${item.id}`}>
+        <MailEntry subtitle={item.sender.name.full} {...item} />
+      </StyledLink>
+    );
+  }
+};
 
 MailListView.propTypes = {
   mails: arrayOf(shape(mailPropTypes)),
   title: string,
+  mailItemRender: func
 };
 
 export default MailListView;
