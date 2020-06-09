@@ -1,12 +1,12 @@
 import React from 'react';
 
-import MailListView from 'components/MailListView';
+import { sent } from 'constants/MOCK/quique.json';
 
-import { MAILS } from './MOCK';
+import MailListView from 'components/MailListView';
 
 function Sent() {
   return (
-    <MailListView mails={MAILS} title="Sent" />
+    <MailListView mails={sent} title="Sent" />
   );
 }
 

@@ -13,7 +13,7 @@ function MailEntry({ body, id, name, onClick, subject }) {
     <Box onClick={handleClick} flex={{ shrink: 0 }} border={{ side: 'bottom', size: 'xsmall'}} pad="medium" focusIndicator>
       <Box direction="row-responsive">
         <Text margin={{ bottom: 'xsmall', right: 'xsmall' }} weight="bold">{subject}</Text>
-        <Text margin={{ bottom: 'xsmall' }} color="dark-3">{`${name.first} ${name.last}`}</Text>
+        {/* <Text margin={{ bottom: 'xsmall' }} color="dark-3">{`${name.first} ${name.last}`}</Text> */}
       </Box>
       <Text truncate>{body}</Text>
     </Box>

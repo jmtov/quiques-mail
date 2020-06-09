@@ -2,11 +2,11 @@ import React from 'react';
 
 import MailListView from 'components/MailListView';
 
-import { MAILS } from './MOCK';
+import { inbox } from 'constants/MOCK/quique.json';
 
 function Inbox() {
   return (
-    <MailListView mails={MAILS} title="Inbox" />
+    <MailListView mails={inbox} title="Inbox" />
   );
 }
 

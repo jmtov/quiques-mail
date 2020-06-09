@@ -77,7 +77,7 @@ function MailListView({ title, mails }) {
         <Box pad="small" flex={{ grow: 1, shrink: 1 }} height="100vh">
           <List
             onMore={handleMore}
-            filtered={!!filter}
+            filtered={filter.value && !!filter.value.length}
             items={slicedItems}
             hasMore={slicedItems.length < filteredItems.length}
             render={(item) => (

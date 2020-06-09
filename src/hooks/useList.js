@@ -7,7 +7,6 @@ function useList(items, { filter, range }) {
         const passed = [];
         filter.keys.forEach(key => {
           if (item[key]) {
-            console.log(item[key]);
             const foundOnItemKey = JSON.stringify(item[key]).toLowerCase().search(filter.value.toLowerCase()) >= 0;
             passed.push(foundOnItemKey);
           }
