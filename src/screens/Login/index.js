@@ -1,10 +1,12 @@
 import React, { useState, useContext, useCallback } from 'react';
-import { Button, Box, Image, FormField, Form, Text, TextInput } from 'grommet/components';
+import { Button, Box, Image, Form, Text } from 'grommet/components';
 
 import { INPUT_TYPES } from 'constants/forms';
 import { REQUEST_STATUS } from 'constants/network';
 import { AuthContext } from 'contexts/auth';
 import Logo from 'assets/logo.png';
+
+import Field from 'components/Field';
 
 import { FORM_INPUTS } from './constants';
 
@@ -24,7 +26,7 @@ function Login() {
     if (loginError) {
       resetLoginStatus();
     }
-  }, [loginError]);
+  }, [loginError, resetLoginStatus]);
 
   return (
     <Box pad="large" align="center" justify="center">
@@ -33,26 +35,24 @@ function Login() {
           <Image fit="contain" src={Logo} />
         </Box>
         <Form onSubmit={handleSubmit} onChange={handleFormChange} validate="blur">
-          <FormField label={FORM_INPUTS.EMAIL.LABEL} name={FORM_INPUTS.EMAIL.NAME} validate={FORM_INPUTS.EMAIL.VALIDATE} required>
-            <TextInput
-              name={FORM_INPUTS.EMAIL.NAME}
-              onChange={event => setEmail(event.target.value)}
-              placeholder={FORM_INPUTS.EMAIL.PLACEHOLDER}
-              required
-              validate={FORM_INPUTS.EMAIL.VALIDATE}
-              value={email}
-            />
-          </FormField>
-          <FormField label={FORM_INPUTS.PASSWORD.LABEL} name={FORM_INPUTS.PASSWORD.NAME} required>
-            <TextInput
-              name={FORM_INPUTS.PASSWORD.NAME}
-              onChange={event => setPassword(event.target.value)}
-              placeholder={FORM_INPUTS.PASSWORD.LABEL}
-              required
-              type={INPUT_TYPES.PASSWORD}
-              value={password}
-            />
-          </FormField>
+          <Field
+            label={FORM_INPUTS.EMAIL.LABEL}
+            name={FORM_INPUTS.EMAIL.NAME}
+            onChange={event => setEmail(event.target.value)}
+            placeholder={FORM_INPUTS.EMAIL.PLACEHOLDER}
+            required
+            validate={FORM_INPUTS.EMAIL.VALIDATE}
+            value={email}
+          />
+          <Field
+            label={FORM_INPUTS.PASSWORD.LABEL}
+            name={FORM_INPUTS.PASSWORD.NAME}
+            onChange={event => setPassword(event.target.value)}
+            placeholder={FORM_INPUTS.PASSWORD.LABEL}
+            required
+            type={INPUT_TYPES.PASSWORD}
+            value={password}
+          />
           <Box direction="row" align="center" justify="start" margin={{ top: 'medium', bottom: 'medium' }}>
             <Button type="submit" label={buttonLabel} disabled={!canSubmit} primary />
           </Box>
