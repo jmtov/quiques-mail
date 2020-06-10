@@ -4,6 +4,8 @@ import firebase from 'config/firebase';
 import { REQUEST_STATUS } from 'constants/network';
 import { ERRORS } from 'constants/firebase';
 
+import Loading from 'components/Loading';
+
 export const AuthContext = React.createContext();
 
 export const ACTIONS = {
@@ -80,6 +82,7 @@ function AuthContextProvider({ children }) {
   return (
     <AuthContext.Provider value={{ currentUser, logout, login, loginStatus, loginError, resetLoginStatus }}>
       {currentUserQueryStatus !== REQUEST_STATUS.NOT_REQUESTED && children}
+      {currentUserQueryStatus !== REQUEST_STATUS.DONE && <Loading />}
     </AuthContext.Provider>
   );
 }

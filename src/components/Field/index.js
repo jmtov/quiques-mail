@@ -1,8 +1,9 @@
 import React from 'react';
 import { arrayOf, bool, element, elementType, func, oneOfType, string } from 'prop-types';
-import { FormField, TextInput } from 'grommet/components';
+import { TextInput } from 'grommet/components';
 
 import { INPUT_TYPES } from 'constants/forms';
+import StyledFormField from 'components/Styled/FormField';
 
 function Field({
   component: Component,
@@ -18,7 +19,7 @@ function Field({
   ...props
 }) {
   return (
-    <FormField label={label} name={name} validate={validate} required={required} readOnly={readOnly} height="100%">
+    <StyledFormField label={label} name={name} validate={validate} required={required} readOnly={readOnly} height="100%">
       <Component
         name={name}
         onChange={onChange}
@@ -30,7 +31,7 @@ function Field({
         value={value}
         {...props}
       />
-    </FormField>
+    </StyledFormField>
   );
 }
 

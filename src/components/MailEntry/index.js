@@ -11,11 +11,12 @@ const StyledLink = styled(Link)`
   transition: transform 0.2s;
 
   &:hover {
-    transform: translateX(5px);
+    transform: translateX(-5px);
   }
 
   &:active {
-    transform: translateX(20px);
+    opacity: 0.7;
+    transform: translateX(-10px);
   }
 `;
 
