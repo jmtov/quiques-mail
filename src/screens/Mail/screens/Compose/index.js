@@ -2,7 +2,6 @@ import React, { useState, useCallback, useContext, useEffect } from 'react';
 import { Button, Box, Form, Text, TextArea } from 'grommet/components';
 import { Link } from 'react-router-dom';
 
-import MailService from 'services/MailService';
 import { MailContext } from 'contexts/mail';
 import { AuthContext } from 'contexts/auth';
 import { INPUT_TYPES } from 'constants/forms';
@@ -13,16 +12,16 @@ import Field from 'components/Field';
 
 import { FORM_INPUTS } from './constants';
 
-// TODO: Check performance.
+// TODO: Check performance. Finish Draft save.
 function Compose() {
-  const { sendAction, sendEmail, clearSendAction } = useContext(MailContext);
+  const { sendAction, sendEmail } = useContext(MailContext);
   const { currentUser } = useContext(AuthContext);
   const [sentPath, setSentPath] = useState('');
   const [subject, setSubject] = useState('');
   const [recipient, setRecipient] = useState('');
   const [body, setBody] = useState('');
 
-  const canSubmit = subject && recipient && body;
+  const canSubmit = subject && recipient && body && sendAction.status !== REQUEST_STATUS.LOADING;
 
   const handleSubmit = useCallback(() => {
     if (canSubmit) {
@@ -30,9 +29,9 @@ function Compose() {
     }
   }, [canSubmit, body, recipient, subject, currentUser, sendEmail]);
 
-  const handleChange = useCallback(() => {
-    MailService.saveDraft({ body, recipient, subject });
-  }, [body, recipient, subject]);
+  // const handleDraftSave = useCallback(() => {
+  //   saveDraft({ subject, body, recipient });
+  // }, [subject, body, recipient, saveDraft]);
 
   useEffect(() => {
     if (sendAction.status === REQUEST_STATUS.DONE) {
@@ -40,13 +39,9 @@ function Compose() {
     }
   }, [sendAction.status, sendAction]);
 
-  useEffect(() => {
-    return clearSendAction();
-  }, [clearSendAction]);
-
   return (
     <Box border={{ size: 'xsmall' }} flex={{ grow: 1, shrink: 1 }} height="100vh" margin="medium" overflow="auto">
-      <Form onChange={handleChange} onSubmit={handleSubmit} validate="blur" >
+      <Form onSubmit={handleSubmit} validate="blur">
         <Box border={{ size: 'xsmall', side: 'bottom' }} flex={{ grow: 0, shrink: 1 }} pad="medium">
           <Field
             flex={{ shrink: 0 }}
@@ -88,8 +83,8 @@ function Compose() {
           {sendAction.error && <Text color="status-critical">{sendAction}</Text>}
           {sendAction.status === REQUEST_STATUS.LOADING && <Text color="neutral-3">Sending...</Text>}
           {sendAction.status === REQUEST_STATUS.DONE && (
-            <Link to={sentPath}>
-              <Text weight="bold" color="status-ok">Sent! See in Sent email</Text>
+            <Link to={sentPath} style={{ textDecoration: 'none' }}>
+              <Text weight="bold" color="status-ok">Sent! You can see it on the Sent email</Text>
             </Link>
           )}
         </Box>
