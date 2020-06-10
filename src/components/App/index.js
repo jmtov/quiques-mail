@@ -1,11 +1,17 @@
 import React from 'react';
-import { Grommet, Heading, grommet } from 'grommet';
+import { Grommet } from 'grommet';
+
+import { THEME } from 'constants/theme';
+import AuthContextProvider from 'contexts/auth';
+import Routes from 'components/Routes';
 
 function App() {
   return (
-    <Grommet theme={grommet}>
-      <Heading level="1">Quique's Mail App</Heading>
-    </Grommet>
+    <AuthContextProvider>
+      <Grommet theme={THEME}>
+        <Routes />
+      </Grommet>
+    </AuthContextProvider>
   );
 }
 
