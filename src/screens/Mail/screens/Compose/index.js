@@ -16,7 +16,7 @@ import { FORM_INPUTS } from './constants';
 
 // TODO: Check performance. Finish Draft save.
 function Compose() {
-  const { sendAction, sendEmail } = useContext(MailContext);
+  const { sendAction, clearSendAction, sendEmail } = useContext(MailContext);
   const { currentUser } = useContext(AuthContext);
   const [sentPath, setSentPath] = useState('');
   const [subject, setSubject] = useState('');
@@ -36,6 +36,10 @@ function Compose() {
       setSentPath(`${MAIL_ROUTES.SENT.path}?${sendAction.data.id}`);
     }
   }, [sendAction.status, sendAction]);
+
+  useEffect(() => {
+    return clearSendAction();
+  }, [clearSendAction]);
 
   return (
     <StyledBox border={{ size: 'xsmall' }} flex={{ grow: 1, shrink: 1 }} height="100vh" margin="medium" overflow="auto">

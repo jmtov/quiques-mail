@@ -1,4 +1,4 @@
-import { inbox, sent, view } from 'constants/MOCK/quique.json';
+import { inbox, sent, view } from 'constants/MOCK/mails.json';
 import { MAIL_SERVICE_ERRORS } from 'constants/network';
 import { wait } from 'utils/helpers';
 
@@ -17,7 +17,7 @@ const MailService = {
   },
   getDrafts() {
     return new Promise((resolve) => {
-      resolve(sent);
+      resolve([]);
     });
   },
   saveDraft(draft) {
