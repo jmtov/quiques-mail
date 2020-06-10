@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useContext, useEffect } from 'react';
-import { Button, Box, Form, Text, TextArea } from 'grommet/components';
+import { Button, Box, Form, Text } from 'grommet/components';
 import { Link } from 'react-router-dom';
 
 import { MailContext } from 'contexts/mail';
@@ -9,6 +9,8 @@ import { REQUEST_STATUS } from 'constants/network';
 import { MAIL_ROUTES } from 'constants/routes';
 
 import Field from 'components/Field';
+import StyledBox from 'components/Styled/Box';
+import StyledTextArea from 'components/Styled/TextArea';
 
 import { FORM_INPUTS } from './constants';
 
@@ -29,10 +31,6 @@ function Compose() {
     }
   }, [canSubmit, body, recipient, subject, currentUser, sendEmail]);
 
-  // const handleDraftSave = useCallback(() => {
-  //   saveDraft({ subject, body, recipient });
-  // }, [subject, body, recipient, saveDraft]);
-
   useEffect(() => {
     if (sendAction.status === REQUEST_STATUS.DONE) {
       setSentPath(`${MAIL_ROUTES.SENT.path}?${sendAction.data.id}`);
@@ -40,7 +38,7 @@ function Compose() {
   }, [sendAction.status, sendAction]);
 
   return (
-    <Box border={{ size: 'xsmall' }} flex={{ grow: 1, shrink: 1 }} height="100vh" margin="medium" overflow="auto">
+    <StyledBox border={{ size: 'xsmall' }} flex={{ grow: 1, shrink: 1 }} height="100vh" margin="medium" overflow="auto">
       <Form onSubmit={handleSubmit} validate="blur">
         <Box border={{ size: 'xsmall', side: 'bottom' }} flex={{ grow: 0, shrink: 1 }} pad="medium">
           <Field
@@ -64,7 +62,7 @@ function Compose() {
             value={subject}
           />
         </Box>
-        <Box border={{ size: 'xsmall', side: 'bottom' }} pad="medium">
+        <Box border={{ size: 'xsmall', side: 'bottom' }} flex={{ grow: 1, shrink: 1 }} pad="medium">
           <Field
             label={FORM_INPUTS.BODY.LABEL}
             name={FORM_INPUTS.BODY.NAME}
@@ -73,7 +71,7 @@ function Compose() {
             required
             resize="vertical"
             // TODO: Check why text area is not using all the available space
-            component={TextArea}
+            component={StyledTextArea}
             type={INPUT_TYPES.TEXT_AREA}
             value={body}
           />
@@ -89,7 +87,7 @@ function Compose() {
           )}
         </Box>
       </Form>
-    </Box>
+    </StyledBox>
   );
 }
 

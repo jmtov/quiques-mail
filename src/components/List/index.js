@@ -4,6 +4,7 @@ import { Box, Heading, Text } from 'grommet/components';
 import { mailPropTypes } from 'propTypes/mail';
 import { buildThresholdList } from 'utils/behavior';
 
+import StyledBox from 'components/Styled/Box';
 
 // TODO: Optimize unmounting elements that are not in view.
 function List({ items, hasMore, onMore, render }) {
@@ -27,7 +28,7 @@ function List({ items, hasMore, onMore, render }) {
   }, [handleSentinelIntersection]);
 
   return (
-    <Box height="100%" overflow="auto" pad="medium">
+    <StyledBox height="100%" overflow="auto" pad="medium">
       {items && !!items.length && items.map((item) => render(item))}
       {hasMore && (
         <Box width="100%" pad="medium" ref={loaderRef}>
@@ -39,7 +40,7 @@ function List({ items, hasMore, onMore, render }) {
           <Heading level={2}>No results ¯\_(ツ)_/¯ </Heading>
         </Box>
       )}
-    </Box>
+    </StyledBox>
   );
 }
 
