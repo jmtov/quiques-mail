@@ -10,21 +10,25 @@ function Field({
   name,
   onChange,
   placeholder,
+  readOnly,
   required,
   type,
   validate,
   value,
+  ...props
 }) {
   return (
-    <FormField label={label} name={name} validate={validate} required={required}>
+    <FormField label={label} name={name} validate={validate} required={required} readOnly={readOnly} height="100%">
       <Component
         name={name}
         onChange={onChange}
         placeholder={placeholder}
+        readOnly={readOnly}
         required={required}
         type={type}
         validate={validate}
         value={value}
+        {...props}
       />
     </FormField>
   );
@@ -41,6 +45,7 @@ Field.propTypes = {
   name: string,
   onChange: func,
   placeholder: string,
+  readOnly: bool,
   required: bool,
   type: string,
   validate: arrayOf(func),

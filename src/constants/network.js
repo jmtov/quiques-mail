@@ -4,3 +4,10 @@ export const REQUEST_STATUS = {
   DONE: 2,
   ERROR: 3
 };
+
+export const MAIL_SERVICE_ERRORS = {
+  CANNOT_FIND_EMAIL_BY_ID: {
+    code: 2,
+    message: 'Cannot find email by id'
+  }
+};

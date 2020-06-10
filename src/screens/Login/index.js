@@ -29,7 +29,7 @@ function Login() {
   }, [loginError, resetLoginStatus]);
 
   return (
-    <Box pad="large" align="center" justify="center">
+    <Box pad="large" align="center" justify="center" height="100vh">
       <Box width="medium">
         <Box height="small" pad="large">
           <Image fit="contain" src={Logo} />
