@@ -1,15 +1,12 @@
-import React, { useEffect, useContext } from 'react';
+import React from 'react';
 
 import MailListView from 'components/MailListView';
-import { MailContext } from 'contexts/mail';
+import useServiceCall from 'hooks/useServiceCall';
+import MailService from 'services/MailService';
 
 // TODO: Check performance.
 function Inbox() {
-  const { inbox, getInbox } = useContext(MailContext);
-
-  useEffect(() => {
-    getInbox();
-  }, [getInbox]);
+  const { state: inbox } = useServiceCall(MailService.getInbox);
 
   return (
     <MailListView state={inbox} title="Inbox" />

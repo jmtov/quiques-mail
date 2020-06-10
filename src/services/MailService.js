@@ -20,11 +20,12 @@ const MailService = {
       resolve(sent);
     });
   },
-  // TODO: Complete
   saveDraft(draft) {
-    console.log(draft);
     return new Promise((resolve) => {
-      resolve();
+      const parsedData = parseData(draft);
+      parsedData[0].isDraft = true;
+      parsedData[1].isDraft = true;
+      resolve(parsedData);
     });
   },
   async sendEmail(data) {
