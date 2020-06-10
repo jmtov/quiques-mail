@@ -10,9 +10,6 @@ export const ACTIONS = {
   SEND_ACTION: 'SEND_ACTION',
   SEND_ACTION_SUCCESS: 'SEND_ACTION_SUCCESS',
   SEND_ACTION_FAILURE: 'SEND_ACTION_FAILURE',
-  SAVE_DRAFT: 'SAVE_DRAFT',
-  SAVE_DRAFT_SUCCESS: 'SAVE_DRAFT_SUCCESS',
-  SAVE_DRAFT_FAILURE: 'SAVE_DRAFT_FAILURE',
   SET_PENDING_INBOX: 'SET_PENDING_INBOX',
   SET_PENDING_SENT: 'SET_PENDING_SENT',
   SET_PENDING_DRAFTS: 'SET_PENDING_DRAFTS',
@@ -26,6 +23,8 @@ const sendActionReducer = (state, action) => {
     return { ...state, status: REQUEST_STATUS.DONE, data: action.payload };
   case ACTIONS.SEND_ACTION_FAILURE:
     return { ...state, status: REQUEST_STATUS.ERROR, error: action.payload };
+  case ACTIONS.CLEAR_SEND_ACTION:
+    return { ...initialState };
   default:
     return state;
   }
@@ -87,8 +86,13 @@ function MailContextProvider({ children }) {
       });
   }, []);
 
+  const clearSendAction = useCallback(() => {
+    sendActionDispatch({ type: ACTIONS.CLEAR_SEND_ACTION });
+  }, []);
+
   return (
     <MailContext.Provider value={{
+      clearSendAction,
       sendAction,
       pending,
       saveDraft,
