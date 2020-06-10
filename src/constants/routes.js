@@ -1,27 +1,40 @@
 import { Document as DocumentIcon, Inbox as InboxIcon, Send as SentIcon } from 'grommet-icons';
 
 import Login from 'screens/Login';
-import Inbox from 'screens/Inbox';
-import Sent from 'screens/Sent';
-import Drafts from 'screens/Drafts';
-import Compose from 'screens/Compose';
-import View from 'screens/View';
+import Mail from 'screens/Mail';
+import Inbox from 'screens/Mail/screens/Inbox';
+import Sent from 'screens/Mail/screens/Sent';
+import Drafts from 'screens/Mail/screens/Drafts';
+import Compose from 'screens/Mail/screens/Compose';
+import View from 'screens/Mail/screens/View';
 
-export const ROUTES = {
+export const GLOBAL_ROUTES = {
   LOGIN: {
     id: 0,
     name: 'login',
     path: '/login',
     component: Login,
     exact: true,
-    navbar: {
-      hidden: true
-    },
   },
+  MAIL: {
+    id: 0,
+    name: 'mail',
+    path: '/mail',
+    component: Mail,
+  },
+  DEFAULT: {
+    id: 100,
+    name: 'home',
+    path: '/',
+    isPrivate: true,
+  }
+};
+
+export const MAIL_ROUTES = {
   INBOX: {
     id: 5,
     name: 'inbox',
-    path: '/inbox',
+    path: '/mail/inbox',
     component: Inbox,
     exact: true,
     isPrivate: true,
@@ -32,7 +45,7 @@ export const ROUTES = {
   SENT: {
     id: 10,
     name: 'sent',
-    path: '/sent',
+    path: '/mail/sent',
     component: Sent,
     exact: true,
     isPrivate: true,
@@ -43,7 +56,7 @@ export const ROUTES = {
   DRAFTS: {
     id: 15,
     name: 'drafts',
-    path: '/drafts',
+    path: '/mail/drafts',
     component: Drafts,
     exact: true,
     isPrivate: true,
@@ -54,7 +67,7 @@ export const ROUTES = {
   COMPOSE: {
     id: 20,
     name: 'compose',
-    path: '/compose',
+    path: '/mail/compose',
     component: Compose,
     exact: true,
     isPrivate: true,
@@ -65,22 +78,12 @@ export const ROUTES = {
   VIEW: {
     id: 25,
     name: 'view',
-    path: '/view/:id',
-    basePath: '/view',
+    path: '/mail/view/:id',
+    basePath: '/mail/view',
     component: View,
     isPrivate: true,
     navbar: {
       hidden: true,
     },
   },
-  DEFAULT: {
-    id: 100,
-    name: 'home',
-    path: '/',
-    isPrivate: true,
-    component: Inbox,
-    navbar: {
-      hidden: true,
-    },
-  }
 };

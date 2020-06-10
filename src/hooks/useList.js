@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 function useList(items, { filter, range }) {
   const filteredItems = useMemo(() => {
-    if (filter.value && filter.keys && filter.keys.length) {
+    if (items && filter.value && filter.keys && filter.keys.length) {
       const filtered = items.filter(item => {
         const passed = [];
         filter.keys.forEach(key => {
@@ -16,12 +16,15 @@ function useList(items, { filter, range }) {
 
       return filtered;
     }
-    return items;
+    return items || [];
   }, [filter.value, filter.keys, items]);
 
   const slicedItems = useMemo(() => {
-    return filteredItems.slice(range.start, range.end);
-  }, [range.start, range.end, filteredItems]);
+    if (items && items.length) {
+      return filteredItems.slice(range.start, range.end);
+    }
+    return items || [];
+  }, [range.start, range.end, filteredItems, items]);
 
   return { filteredItems, slicedItems };
 }
